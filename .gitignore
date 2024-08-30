@@ -1,0 +1,6 @@
+.vscode/
+output/
+nbproject/
+build/
+dist/
+.generated_files/
