@@ -118,4 +118,3 @@ void INT2_changeMode(char mode);
 void global_interrupt_enable(void);
 
 #endif // MINERRUPT_H
-#endif // MINERRUPT_H
