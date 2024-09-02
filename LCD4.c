@@ -28,7 +28,7 @@ void LCD4_CMD(char command) {
     LCD4_DATA = (LCD4_DATA & 0x0F) | (command & 0xF0);
     LCD4_Enable();
     //sending the LOW nibble of the command
-    LCD4_DATA = (LCD4_DATA & 0xF0) | (command << 4);
+    LCD4_DATA = (LCD4_DATA & 0x0F) | (command << 4);
     LCD4_Enable();
     _delay_ms(20);
 
