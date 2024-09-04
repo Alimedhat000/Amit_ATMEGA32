@@ -34,6 +34,14 @@
 #define ADC_DREQ_DIV_4 2
 #define ADC_DREQ_DIV_2 1
 
+#define AUTO_TRIG_FREE_RUNNING 0
+#define AUTO_TRIG_ANALOG_COMP 1
+#define AUTO_TRIG_EXT_INT0 2
+#define AUTO_TRIG_TIMER0_CM 3
+#define AUTO_TRIG_TIMER0_OF 4
+#define AUTO_TRIG_TIMER1_CM 5
+#define AUTO_TRIG_TIMER1_OF 6
+#define AUTO_TRIG_TIMER_CE 7
 
 /**
  * @brief Initialize the ADC with specified parameters.

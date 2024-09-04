@@ -8,7 +8,7 @@ void init_ADC(char ch, char ref, char freq) {
 
     ADC_select_ref(ref);
 
-//    ADC_auto_trig_enable();
+    //    ADC_auto_trig_enable();
 
     ADC_enable_int();
 
@@ -44,6 +44,11 @@ void ADC_enable() {
 
 void ADC_enable_int() {
     ADCSRA |= (1 << ADIE);
+}
+
+void ADC_select_auto_trig(char source) {
+    SFIOR &= ~(0xE0); // clear the select bits
+    SFIOR |= (source << ADTS0);
 }
 
 void ADC_auto_trig_enable() {
