@@ -12,6 +12,7 @@
 #include "KeyPad.h"
 #include "minterrupt.h"
 #include "myADC.h"
+#include "mTimer.h"
 
 int main(void) {
     while (1) {
