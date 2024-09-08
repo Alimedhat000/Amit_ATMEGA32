@@ -2,7 +2,7 @@
 
 void init_Usart(unsigned int baud, char TX_RX, char mode) {
     unsigned int ubrr_value = 0;
-    
+
     /* Select the mode and set the baud rate accordingly */
     switch (mode) {
         case (USART_ASYNC_MODE):
@@ -21,7 +21,7 @@ void init_Usart(unsigned int baud, char TX_RX, char mode) {
 
         case (USART_SYNC_MASTER):
             // Set Synchronous Master mode, UMSEL bit enabled, and disable double speed
-            UCSRC = (UCSRC | (1 << URSEL)) | (1 << UMSEL); 
+            UCSRC = (UCSRC | (1 << URSEL)) | (1 << UMSEL);
             UCSRA &= ~(1 << U2X); // Disable double speed
             ubrr_value = (F_CPU / 2.0 / baud) - 1; // Calculate UBRR for sync mode
             setPinB_DIR(XCK, OUT); // Set PB0 as output for clock
@@ -29,7 +29,7 @@ void init_Usart(unsigned int baud, char TX_RX, char mode) {
 
         case (USART_SYNC_SLAVE):
             // Set Synchronous Slave mode, UMSEL bit enabled, and disable double speed
-            UCSRC = (UCSRC | (1 << URSEL)) | (1 << UMSEL); 
+            UCSRC = (UCSRC | (1 << URSEL)) | (1 << UMSEL);
             UCSRA &= ~(1 << U2X); // Disable double speed
             ubrr_value = (F_CPU / 2.0 / baud) - 1; // Calculate UBRR for sync mode
             setPinB_DIR(XCK, IN); // Set PB0 as input for clock
@@ -38,7 +38,7 @@ void init_Usart(unsigned int baud, char TX_RX, char mode) {
         default:
             return; // Invalid mode, return from function
     }
-    
+
     // Set UBRR register for baud rate
     UBRRH = (unsigned char) (ubrr_value >> 8);
     UBRRL = (unsigned char) ubrr_value;
