@@ -86,6 +86,7 @@ int ADC_read_fast() {
         // If ADLAR is clear (right-adjusted) if the readings is less than 255
         data = ADCL; // Return the 8 least significant bits from ADCL
         char dummy = ADCH; // Read ADCH to complete the reading process
+        dummy++;
     }
     return data;
 }
