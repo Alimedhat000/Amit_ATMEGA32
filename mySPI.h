@@ -17,10 +17,10 @@
 #define SPI_CLOCK_DIV32  6  // f_osc / 32 (use SPI2X in SPSR) 110
 
 // Define SPI Pins
-#define MOSI PB3
-#define MISO PB4
-#define SCK  PB5
-#define SS   PB2
+#define MOSI PB5
+#define MISO PB6
+#define SCK  PB7
+#define SS   PB4
 
 // Define SPI DDR
 #define SPI_DDR DDRB
