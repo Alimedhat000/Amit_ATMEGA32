@@ -92,11 +92,4 @@ void Usart_en_TX_int(void);
  */
 void Usart_disable_TX_int(void);
 
-/**
- * Helper function to set the direction of a pin (input or output).
- * @param pin The pin number.
- * @param dir Direction (IN or OUT).
- */
-void setPinB_DIR(char pin, char dir);
-
 #endif // MYUSART_H

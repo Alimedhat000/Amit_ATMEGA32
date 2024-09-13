@@ -50,18 +50,18 @@ void init_Usart(unsigned int baud, char TX_RX, char mode) {
     switch (TX_RX) {
         case (USART_TRANSMIT):
             // Enable transmission only
-            USART_Recieve_disable();
-            USART_Transmit_en();
+            Usart_Recieve_disable();
+            Usart_Transmit_en();
             break;
         case (USART_RECIEVE):
             // Enable reception only
-            USART_Transmit_disable();
-            USART_Recieve_en();
+            Usart_Transmit_disable();
+            Usart_Recieve_en();
             break;
         case (USART_FULL_DUPLEX):
             // Enable both transmission and reception (full duplex)
-            USART_Recieve_en();
-            USART_Transmit_en();
+            Usart_Recieve_en();
+            Usart_Transmit_en();
             break;
         default:
             return; // Invalid TX/RX mode, return from function
