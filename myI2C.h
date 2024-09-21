@@ -67,14 +67,14 @@ void I2C_Prepare_ACK(void);
 // Master Functions
 void I2C_Master_Transmit(char Slave_Address, char data);
 char I2C_Master_Recieve(char Slave_Address);
-void I2C_Master_Transmit_Buffer(char Slave_Address, char* data);
-char* I2C_Master_Recieve_Buffer(char Slave_Address);
+void I2C_Master_Transmit_Buffer(char Slave_Address, char* Data, char DataSize);
+void I2C_Master_Recieve_Buffer(char Slave_Address);
 
 // Slave  Functions
 void I2C_Slave_Transmit(char data);
 char I2C_Slave_Recieve(void);
-void I2C_Slave_Transmit_Buffer(char* data);
-char* I2C_Slave_Recieve_Buffer(void);
+void I2C_Slave_Transmit_Buffer(char* Data, char DataSize);
+void I2C_Slave_Recieve_Buffer(char*Data, char DataSize);
 
 #endif	/* MY_I2C_H */
 
