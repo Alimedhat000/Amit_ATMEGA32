@@ -1,8 +1,6 @@
 #include "myEEPROM.h"
-#include "myI2C.h"
 
-void EEPROM_TWI_WRITE(int EEPROM_Address, int Address, char Data)
-{
+void EXT_EEPROM_TWI_WRITE(int EEPROM_Address, int Address, char Data) {
     // Send Start Condition
     I2C_Send_Start();
     I2C_wait();
@@ -34,8 +32,7 @@ void EEPROM_TWI_WRITE(int EEPROM_Address, int Address, char Data)
     I2C_Send_Stop();
 }
 
-char EEPROM_TWI_READ(int EEPROM_Address, int Address)
-{
+char EXT_EEPROM_TWI_READ(int EEPROM_Address, int Address) {
 
     // Send Start Condition
     I2C_Send_Start();
@@ -79,4 +76,32 @@ char EEPROM_TWI_READ(int EEPROM_Address, int Address)
 
     return data;
 
+}
+
+void INT_EEPROM_WRITE(unsigned int Address, char Data) {
+    if (Address > 0x3FF) {
+        return;
+    }
+    while (EECR & (1 << EEWE));
+    EEAR = Address;
+
+    EEDR = Data;
+
+    EECR = (EECR | (1 << EEMWE)) & ~(1 << EEWE);
+
+    EECR |= (1 << EEWE);
+
+}
+
+char INT_EEPROM_READ(unsigned int Address) {
+    if (Address > 0x3FF) {
+        return -1;
+    }
+    while (EECR & (1 << EEWE));
+
+    EEAR = Address;
+
+    EECR |= (1 << EERE);
+
+    return EEDR;
 }
