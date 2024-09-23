@@ -10,26 +10,26 @@ void Timer0_mode_select(char mode) {
 
     TCCR0 &= ~((1 << WGM00) | (1 << WGM01));
     switch (mode) {
-        case(TIMER0_NORMAL_MODE):
-            Timer0_OVF_int_en();
-            break;
+    case(TIMER0_NORMAL_MODE):
+        Timer0_OVF_int_en();
+        break;
 
-        case(TIMER0_PWM_MODE):
-            TCCR0 |= (1 << WGM00);
-            break;
+    case(TIMER0_PWM_MODE):
+        TCCR0 |= (1 << WGM00);
+        break;
 
-        case(TIMER0_CTC_MODE):
-            OCR0 = TIMER0_CTC0_DEFAULT_VALUE;
-            TCCR0 |= (1 << WGM01);
-            Timer0_OCM_int_en();
-            break;
+    case(TIMER0_CTC_MODE):
+        OCR0 = TIMER0_CTC0_DEFAULT_VALUE;
+        TCCR0 |= (1 << WGM01);
+        Timer0_OCM_int_en();
+        break;
 
-        case(TIMER0_FAST_PWM_MODE):
-            TCCR0 |= ((1 << WGM00) | (1 << WGM01));
-            break;
+    case(TIMER0_FAST_PWM_MODE):
+        TCCR0 |= ((1 << WGM00) | (1 << WGM01));
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
@@ -72,26 +72,26 @@ void Timer2_mode_select(char mode) {
     TCCR2 &= ~((1 << WGM20) | (1 << WGM21));
 
     switch (mode) {
-        case(TIMER2_NORMAL_MODE):
-            Timer2_OVF_int_en();
-            break;
+    case(TIMER2_NORMAL_MODE):
+        Timer2_OVF_int_en();
+        break;
 
-        case(TIMER2_PWM_MODE):
-            TCCR2 |= (1 << WGM20);
-            break;
+    case(TIMER2_PWM_MODE):
+        TCCR2 |= (1 << WGM20);
+        break;
 
-        case(TIMER2_CTC_MODE):
-            OCR2 = TIMER2_CTC2_DEFAULT_VALUE;
-            TCCR2 |= (1 << WGM21);
-            Timer2_OCM_int_en();
-            break;
+    case(TIMER2_CTC_MODE):
+        OCR2 = TIMER2_CTC2_DEFAULT_VALUE;
+        TCCR2 |= (1 << WGM21);
+        Timer2_OCM_int_en();
+        break;
 
-        case(TIMER2_FAST_PWM_MODE):
-            TCCR2 |= ((1 << WGM20) | (1 << WGM21));
-            break;
+    case(TIMER2_FAST_PWM_MODE):
+        TCCR2 |= ((1 << WGM20) | (1 << WGM21));
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
@@ -135,12 +135,21 @@ void Timer2_sync_en() {
     ASSR &= ~(1 << AS2);
 }
 
+void Timer2_OC2_en() {
+    setPinD_DIR(TIMER2_OC2, OUT);
+}
+
+void Timer2_OC2_select_mode(char mode) {
+    TCCR2 &= ~(1 << COM21 | 1 << COM20); //reset first
+    TCCR2 |= (mode << COM20); //then OR the selected mode shifted by the place of the select mode bit
+}
+
 void Timer2_wait_busy() {
     while (ASSR & ((1 << TCR2UB) | (1 << OCR2UB) | (1 << TCN2UB)));
 }
 
 void Timer2_SwitchToAsync(char mode, char clk) {
-    // Stop Timer2 by clearing the clock source bits and stop ints
+    // Stop Timer2 by clearing the clock source bits and stop INTS
     Timer2_clk_select(TIMER2_NO_CLK);
     Timer2_disable_ints();
 

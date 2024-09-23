@@ -37,7 +37,25 @@
 #define TIMER2_CTC_MODE 2
 #define TIMER2_FAST_PWM_MODE 3
 
-#define TIMER2_CTC2_DEFAULT_VALUE 255
+#define TIMER2_OC2 PD7
+
+//type of output in OC2 after compare or overflow (according to wave and compare types)
+//0 is disconnected for all
+#define TIMER2_OC2_DISCONNECTED          0
+//CTC
+#define TIMER2_OC2_CTC_TOGGLE            1 //Toggle OC2 on compare match
+#define TIMER2_OC2_CTC_CLEAR             2 //Clear OC2 on compare match
+#define TIMER2_OC2_CTC_SET               3 //Set OC2 on compare match
+
+//1 is reserved for both
+//PWM
+#define TIMER2_OC2_PWM_CLEAR_UP    2 //Clear OC2 on compare match when up-counting. Set OC2 on compare match when downcounting
+#define TIMER2_OC2_PWM_SET_UP      3 //Set OC2 on compare match when up-counting. Clear OC2 on compare match when downcounting.
+//fast PWM
+#define TIMER2_OC2_FPWM_CLEAR      2 //Clear OC2 on compare match, set OC2 at BOTTOM
+#define TIMER2_OC2_FPWM_SET        3 //Set OC2 on compare match, clear OC2 at BOTTOM
+
+#define TIMER2_CTC2_DEFAULT_VALUE 100
 
 /**
  * @brief Selects the clock source for Timer0.
@@ -189,6 +207,10 @@ void Timer2_SwitchToAsync(char mode, char clk);
  * @brief Switches Timer2 to synchronous mode.
  */
 void Timer2_SwitchToSync(char mode, char clk);
+
+void Timer2_OC2_en();
+
+void Timer2_OC2_select_mode(char mode);
 
 
 #endif	/* XC_HEADER_TEMPLATE_H */
