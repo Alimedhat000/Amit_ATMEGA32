@@ -122,7 +122,7 @@ void I2C_Master_Recieve_Buffer(char Slave_Address, char* Data, char DataSize) {
     }
 
     // Receive DataSize - 1 bytes with ACK
-    for (char i = 0; i < DataSize - 1; i++) {
+    for (int i = 0; i < DataSize - 1; i++) {
         I2C_Prepare_ACK(); // Prepare ACK for each byte
         I2C_wait();
         if (!I2C_Check_Status(I2C_STATUS_MR_DATA_ACK)) {

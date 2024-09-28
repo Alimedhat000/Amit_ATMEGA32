@@ -38,13 +38,13 @@ char EXT_EEPROM_TWI_READ(int EEPROM_Address, int Address) {
     I2C_Send_Start();
     I2C_wait();
     if (!I2C_Check_Status(I2C_STATUS_MT_START)) {
-        return;
+        return -1;
     }
     // Send EEPROM Address with write to edit current address
     I2C_Send_SLA(EEPROM_Address, I2C_WRITE);
     I2C_wait();
     if (!I2C_Check_Status(I2C_STATUS_MT_SLA_ACK)) {
-        return;
+        return -1;
     }
     // Send memory Address
     I2C_Send_Data(Address >> 8); // Sending the higher nibble
@@ -52,24 +52,24 @@ char EXT_EEPROM_TWI_READ(int EEPROM_Address, int Address) {
     I2C_Send_Data(Address); // Sending the higher nibble
     I2C_wait();
     if (!I2C_Check_Status(I2C_STATUS_MT_DATA_ACK)) {
-        return;
+        return -1;
     }
     // Repeated Start Condition
     I2C_Send_Start();
     I2C_wait();
     if (!I2C_Check_Status(I2C_STATUS_MT_REP_START)) {
-        return;
+        return -1;
     }
     // Send EEPROM Address with read 
     I2C_Send_SLA(EEPROM_Address, I2C_WRITE);
     I2C_wait();
     if (!I2C_Check_Status(I2C_STATUS_MR_SLA_ACK)) {
-        return;
+        return -1;
     }
     // Receive the Data
     I2C_wait();
     if (!I2C_Check_Status(I2C_STATUS_MR_DATA_NO_ACK)) {
-        return;
+        return -1;
     }
     char data = TWDR;
     I2C_Send_Stop();
