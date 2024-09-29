@@ -20,22 +20,36 @@
 #define Myadd 0x01
 #define Slave 0x0A
 
-int main(void) {
+#include "freertos/include/FreeRTOS.h"
+#include "freertos/include/FreeRTOSConfig.h"
+#include "freertos/include/task.h"
 
 
-    Timer2_OC2_en();
-    Timer2_OC2_select_mode(TIMER2_OC2_CTC_TOGGLE);
-    init_Timer2(TIMER2_CTC_MODE, TIMER2_CLK_1024);
+void TaskFun1(void *Param);
+void TaskFun2(void *Param);
+void TaskFun3(void *Param);
 
-    init_buttons();
+void TaskFun1(void *Param) {
 
     while (1) {
-        if (is_pressed(Button0)) {
-            OCR2 += 5;
-        }
-        if (is_pressed(Button1)) {
-            OCR2 -= 5;
-        }
-        _delay_ms(50);
+        Usart_Transmit(*((char *)Param));
+        vTaskDelay(500);
     }
+    vTaskDelete(NULL);
+}
+
+int main(void) {
+    initLEDs();
+    init_Usart(USART_BAUD_9600,USART_TRANSMIT,USART_ASYNC_MODE);
+    
+    TaskHandle_t Handeler1 = NULL;
+    TaskHandle_t Handeler2 = NULL;
+    
+    char TASK1str = 'a';
+    char TASK2str = 'b';
+
+    xTaskCreate(TaskFun1, "MyTask1", 100, (void*)&TASK1str, 1, &Handeler1);
+    xTaskCreate(TaskFun1, "MyTask2", 100, (void*)&TASK2str, 1, &Handeler2);
+
+    vTaskStartScheduler();
 }
